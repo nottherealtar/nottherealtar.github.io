@@ -50,6 +50,15 @@
         .discord-button:hover {
             background-color: #5865F2;
         }
+        .content-box {
+            background: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+            backdrop-filter: blur(10px); /* Blur the background */
+            border-radius: 25px; /* Rounded corners */
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px; /* Adjust as needed */
+            text-align: center;
+        }
         #matrix-rain {
             position: fixed;
             top: 0;
@@ -61,11 +70,12 @@
 <body>
     <canvas id="matrix-rain"></canvas>
     <!-- rest of your HTML -->
-
+<div class="content-box">
     <img class="logo" src="/TarsLogo.png" alt="TarsLogo.png">
     <h1>Welcome to the TarsOnlineCafe!</h1>
     <p>Join our community of developers to Game, Share ideas, and Learn together.</p>
     <a class="discord-button" href="https://discord.gg/CsR9zECCQt">Join Discord Server</a>
+</div>
 </body>
 
 <script>
