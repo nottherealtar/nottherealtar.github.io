@@ -1,43 +1,41 @@
-<!DOCTYPE html>
-<html>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-     <meta
-        content="TarsOnlineCafe is a community of developers, python, programming, coding, code, scripting, scripted, scripter."
-        name="keywords">
-    <meta name="google-site-verification" content="jVRYHc-GlrWWlnjewdC9LEzH8jBCzZFdmmxsQxporfk" />
-    <meta name="msvalidate.01" content="492166F661296B2AC288278E6D8E41C9" />
 <head>
-
     <!-- other elements -->
     <link rel="icon" type="image/png" href="/TarsLogo.png">
-
     <title>TarsOnlineCafe</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(-5px, -5px); }
+            60% { transform: translate(5px, 5px); }
+            80% { transform: translate(5px, -5px); }
+            100% { transform: translate(0); }
+        }
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Roboto Mono', monospace;
             text-align: center;
             padding: 50px;
-            background: #000000; /* Black background */
-            color: #ffffff;
+            background: #000000;
+            color: #0f0;
         }
         h1 {
             font-size: 36px;
             margin-bottom: 20px;
+            position: relative;
+            animation: glitch 1s infinite;
         }
         p {
             font-size: 18px;
             margin-bottom: 40px;
         }
         .logo {
-        width: 200px; /* Adjust as needed */
-        border: 1px solid #888; /* Thin grey border */
-        margin-bottom: 20px; /* Space between the logo and the text */
-        display: block; /* To allow margins to work properly */
-        margin-left: auto; /* Center the logo */
-        margin-right: auto; /* Center the logo */
+            width: 200px; /* Adjust as needed */
+            border: 1px solid #888; /* Thin grey border */
+            margin-bottom: 20px; /* Space between the logo and the text */
+            display: block; /* To allow margins to work properly */
+            margin-left: auto; /* Center the logo */
+            margin-right: auto; /* Center the logo */
         }
         .discord-button {
             display: inline-block;
@@ -52,14 +50,70 @@
         .discord-button:hover {
             background-color: #5865F2;
         }
+        #matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
     </style>
 </head>
 <body>
+    <canvas id="matrix-rain"></canvas>
+    <!-- rest of your HTML -->
 
     <img class="logo" src="/TarsLogo.png" alt="TarsLogo.png">
-    <h1>Welcome to the Developer's Discord Server!</h1>
-    <p>Join our community of developers to collaborate, share ideas, and learn together.</p>
+    <h1>Welcome to the TarsOnlineCafe!</h1>
+    <p>Join our community of developers to Game, Share ideas, and Learn together.</p>
     <a class="discord-button" href="https://discord.gg/CsR9zECCQt">Join Discord Server</a>
-
 </body>
+
+<script>
+    var c = document.getElementById("matrix-rain");
+    var ctx = c.getContext("2d");
+
+    // making the canvas full screen
+    c.height = window.innerHeight;
+    c.width = window.innerWidth;
+
+    // characters
+    var matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
+    matrix = matrix.split("");
+
+    var font_size = 10;
+    var columns = c.width/font_size; 
+
+    // an array of drops - one per column
+    var drops = [];
+    for(var x = 0; x < columns; x++)
+        drops[x] = 1; 
+
+    // drawing the characters
+    function draw() {
+        // Black BG for the canvas
+        // translucent BG to show trail
+        ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        ctx.fillStyle = "#0F0"; // green text
+        ctx.font = font_size + "px arial";
+        // looping over drops
+        for(var i = 0; i < drops.length; i++) {
+            var text = matrix[Math.floor(Math.random()*matrix.length)];
+            // x = i*font_size, y = value of drops[i]*font_size
+            ctx.fillText(text, i*font_size, drops[i]*font_size);
+
+            // sending the drop back to the top randomly after it has crossed the screen
+            // adding a randomness to the reset to make the drops scattered on the Y axis
+            if(drops[i]*font_size > c.height && Math.random() > 0.975)
+                drops[i] = 0;
+
+            // incrementing Y coordinate
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 33);
+</script>
+
 </html>
