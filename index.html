@@ -86,6 +86,20 @@
         .github-button:hover {
             background-color: #444d56;
         }
+        footer {
+            width: 100%;
+            background-color: #24292e;
+            color: #fff;
+            padding: 20px 0;
+            position: fixed;
+            bottom: 0;
+            text-align: center;
+        }
+
+footer p {
+    margin: 0;
+    font-size: 16px;
+}
     </style>
 </head>
 <body>
@@ -102,6 +116,10 @@
     </a>
 </div>
 </body>
+
+<footer>
+    <p>Est. since 2018 LLC</p>
+</footer>
 
 <script>
     var c = document.getElementById("matrix-rain");
@@ -152,32 +170,16 @@
 
     // typing effect goes here 
     var i = 0;
-var j = 0;
-var currentPhrase = 0;
-var isDeleting = false;
-var phrases = ['Welcome to TarsOnlineCafe!', 'Welcome to our Dev Community!'];
+var phrase = 'Welcome to TarsOnlineCafe!';
 
 function type() {
-    var speed = isDeleting ? 100 : 200;
+    var speed = 200;
     var title = document.getElementById('typing-title');
 
-    if (i <= phrases[currentPhrase].length) {
-        if (!isDeleting) {
-            title.innerHTML = phrases[currentPhrase].substring(0, i++);
-        } else {
-            title.innerHTML = phrases[currentPhrase].substring(0, i--);
-        }
+    if (i < phrase.length) {
+        title.innerHTML += phrase.charAt(i++);
+        setTimeout(type, speed);
     }
-
-    if (i > phrases[currentPhrase].length) {
-        isDeleting = true;
-        setTimeout(type, 1000);
-    } else if (isDeleting && i === 0) {
-        currentPhrase = (currentPhrase + 1) % phrases.length;
-        isDeleting = false;
-    }
-
-    setTimeout(type, speed);
 }
 
 window.onload = type;
