@@ -93,7 +93,7 @@
     <!-- rest of your HTML -->
 <div class="content-box">
     <img class="logo" src="/TarsLogo.png" alt="TarsLogo.png">
-    <h1>Welcome to TarsOnlineCafe!</h1>
+    <h1 id="typing-title"></h1>
     <p>Join our community of developers to Game, Share ideas, and Learn together.</p>
     <a class="discord-button" href="https://discord.gg/CsR9zECCQt">Join Discord Server</a>
     <a class="github-button" href="https://github.com/nottherealtar">
@@ -149,6 +149,38 @@
     }
 
     setInterval(draw, 33);
+
+    // typing effect goes here 
+    var i = 0;
+var j = 0;
+var currentPhrase = 0;
+var isDeleting = false;
+var phrases = ['Welcome to TarsOnlineCafe!', 'Welcome to our Dev Community!'];
+
+function type() {
+    var speed = isDeleting ? 100 : 200;
+    var title = document.getElementById('typing-title');
+
+    if (i <= phrases[currentPhrase].length) {
+        if (!isDeleting) {
+            title.innerHTML = phrases[currentPhrase].substring(0, i++);
+        } else {
+            title.innerHTML = phrases[currentPhrase].substring(0, i--);
+        }
+    }
+
+    if (i > phrases[currentPhrase].length) {
+        isDeleting = true;
+        setTimeout(type, 1000);
+    } else if (isDeleting && i === 0) {
+        currentPhrase = (currentPhrase + 1) % phrases.length;
+        isDeleting = false;
+    }
+
+    setTimeout(type, speed);
+}
+
+window.onload = type;
 </script>
 
 </html>
